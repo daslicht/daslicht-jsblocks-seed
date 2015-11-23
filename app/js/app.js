@@ -42,10 +42,10 @@ var Articles = App.Collection({
             route: '/',
             url: 'views/home.html',
           },
-          //news: Articles([{ foo: 'bar' }])
-          news: Articles(),
+          news: Articles([{ foo: 'bar' }]), //this works
+          //news: Articles(), //this not 
           ready: function () {
-            console.log("on2", Articles().read());
+            //console.log("on2", Articles().read());
             
             
           },
