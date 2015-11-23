@@ -50,14 +50,15 @@ var Articles = App.Collection(Article, {
           //news: Articles([{ foo: 'bar' }]), //this works
           news: Articles(), //this also works but it has no content to show. 
           ready: function () {
-            this.news.add({visible: true, text: 'Some text'});
-            this.news.addMany([{
+        //    this.news.add({visible: true, text: 'Some text'});
+         /*   this.news.addMany([{
             	visible: true,
             	text: 'other text'
             },{
             	visible: true,
             	text: 'Some much text ...'
-            }]);
+            }]);*/
+            this.news.read(); //Starts the ajax read request to the colections 'options.read.url'
           },
         });
 
