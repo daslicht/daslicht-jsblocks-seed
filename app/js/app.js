@@ -7,7 +7,11 @@ var GlobalModel = App.Model({
   init: function () {
     var self = this;
     var timer = setInterval(function () {
-      var currentValue = self.value;
+    // You should always call the observable to get it's value in javascript.
+    // It workd here as with the ++ operations the observable function will get called it's 'toString()' function and 
+    // that string will be castet to a number. But this is not a clean way and can lead to hard to find issues.
+    // SO better call it here
+      var currentValue = self.value(); 
       self.value(++currentValue);
     }, 1000);
   }
@@ -25,16 +29,17 @@ var GlobalModel = App.Model({
         });
 
 
-// var Article = App.Model({
-// 		visible: blocks.observable(),
-// });
-
-var Articles = App.Collection({
-		options: {
-      read: {
-        url: '/articles.json'
-      }
-		}
+var Article = App.Model({
+	visible: blocks.observable(),
+	text: blocks.observable('')
+});
+// An Collection needs a model to map the stuff on.
+var Articles = App.Collection(Article, {
+	options: {
+		read: {
+        		url: '/articles.json'
+      		}
+	}
 });
 
         App.View('Home', {
@@ -42,12 +47,17 @@ var Articles = App.Collection({
             route: '/',
             url: 'views/home.html',
           },
-          news: Articles([{ foo: 'bar' }]), //this works
-          //news: Articles(), //this not 
+          //news: Articles([{ foo: 'bar' }]), //this works
+          news: Articles(), //this also works but it has no content to show. 
           ready: function () {
-            //console.log("on2", Articles().read());
-            
-            
+            this.news.add({visible: true, text: 'Some text'});
+            this.news.addMany([{
+            	visible: true,
+            	text: 'other text'
+            },{
+            	visible: true,
+            	text: 'Some much text ...'
+            }]);
           },
         });
 
