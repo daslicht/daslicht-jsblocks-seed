@@ -1,16 +1,16 @@
 [{
-	"text":"some text",
-	"visible": true
+	"name":"some name",
+	"id": true
 },
 {
-        "text":"some text1",
-        "visible": true
+        "name":"some text1",
+        "id": true
 },
 {
-        "text":"some text2",
-        "visible": true
+        "name":"some text2",
+        "id": true
 },
 {
-        "text":"some text3",
-        "visible": true
+        "name":"some text3",
+        "id": true
 }]

@@ -1,5 +1,13 @@
 <h2>Home content</h2>
 
 <ul data-query="each(news)">
-  <li>Text: {{$this.text}}  Visible: {{$this.visible}}</li>
+  <li>Name: {{$this.title}}  Id: {{$this.author}}</li>
 </ul>
+
+<label>Title:</label>
+<input  type="text" data-query="val(article.title)"/>
+
+<label>Author:</label>
+<input type="text" data-query="val(article.author)"></input>
+
+<button data-query="click(addItem)" >Add</button>

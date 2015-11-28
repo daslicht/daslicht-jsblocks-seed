@@ -1,6 +1,20 @@
+/* global blocks */
 var App = blocks.Application({
   history: 'pushState'
 });
+
+/*
+Read with Grt Parameter
+var Page = App.Model({
+    options: {
+        url: '/blogpost?page={{page}}'
+    },
+//
+});
+var page = Page().read({page: 10});
+*/
+
+
 
 var GlobalModel = App.Model({
   value: blocks.observable(0),
@@ -30,16 +44,22 @@ var GlobalModel = App.Model({
 
 
 var Article = App.Model({
-	visible: blocks.observable(),
-	text: blocks.observable('')
+	title: blocks.observable(''),
+	author: blocks.observable('')
 });
 // An Collection needs a model to map the stuff on.
 var Articles = App.Collection(Article, {
 	options: {
 		read: {
-        		url: '/articles.json'
-      		}
+        		//url: '/articles.json'
+            url: 'http://ansolas.de:3000/todos'
+    },
+    create: {
+      url: 'http://ansolas.de:3000/todos'
+    }
 	}
+  
+  
 });
 
         App.View('Home', {
@@ -47,10 +67,12 @@ var Articles = App.Collection(Article, {
             route: '/',
             url: 'views/home.html',
           },
-          //news: Articles([{ foo: 'bar' }]), //this works
-          news: Articles(), //this also works but it has no content to show. 
+          news: Articles().read(), //this works
+          article: Article(),
+          //this.news, //this also works but it has no content to show. 
+            //Starts the ajax read request to the colections 'options.read.url'
           ready: function () {
-        //    this.news.add({visible: true, text: 'Some text'});
+        /*    this.news.add({visible: true, text: 'Some text'});
          /*   this.news.addMany([{
             	visible: true,
             	text: 'other text'
@@ -58,8 +80,15 @@ var Articles = App.Collection(Article, {
             	visible: true,
             	text: 'Some much text ...'
             }]);*/
-            this.news.read(); //Starts the ajax read request to the colections 'options.read.url'
+           
           },
+          addItem : function(){
+            console.log('add', this.article.title());
+            this.news.add(this.article);
+            this.article.sync();
+            
+            
+          }
         });
 
 
