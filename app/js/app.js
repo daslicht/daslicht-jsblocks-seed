@@ -44,8 +44,8 @@ App.View('Global', {
 
 
 var Article = App.Model({
-  title: blocks.observable(''),
-  author: blocks.observable(''),
+  title: App.Property(),
+  author: App.Property(),
   options: {
     create: {
       url: 'http://ansolas.de:3000/todos'
@@ -86,7 +86,7 @@ App.View('Home', {
 
   },
   addItem: function () {
-    console.log('add', this.article.title());
+    console.log('add', this.article);
     this.news.add(this.article);
     this.article.sync();
 
